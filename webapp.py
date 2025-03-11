@@ -42,18 +42,22 @@ with st.form('myform'):
     check_if_buyer_reset()
     check_if_carry_reset()
     date = st.date_input('Date')
-    name = st.selectbox('Buyer', state['buyers'], key="buyer_selectbox")
+    name = st.pills('Buyer', state['buyers'], key="buyer_selectbox")
     quantity = st.number_input('Quantity', step=1)
-    carry = st.selectbox('Carry', state['carry'], key="carry_selectbox")
+    carry = st.pills('Carry', state['carry'], key="carry_selectbox")
     submit = st.form_submit_button('Submit')
     if submit:
-        st.write(f'{date=}, {name=}, {quantity=}, {carry=}')
-        state['buyers'].remove(name)
-        state['carry'].remove(carry)
-        save_state(state)
-        check_if_buyer_reset()
-        check_if_carry_reset()
-        st.rerun()
+        if name == None or carry == None:
+            st.error("Please select a buyer and a carry")
+        elif quantity <= 0:
+            st.error("Quantity must be greater than 0")
+        else:
+            state['buyers'].remove(name)
+            state['carry'].remove(carry)
+            save_state(state)
+            check_if_buyer_reset()
+            check_if_carry_reset()
+            st.rerun()
 
 # Refresh the state every 5 seconds
 while True:
