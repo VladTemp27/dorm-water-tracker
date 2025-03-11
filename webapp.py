@@ -2,6 +2,7 @@ import streamlit as st
 import json
 import os
 import time
+from datetime import datetime
 
 st.title('Papoy\'s Water List')
 
@@ -41,7 +42,7 @@ def refresh_state():
 with st.form('myform'):
     check_if_buyer_reset()
     check_if_carry_reset()
-    date = st.date_input('Date')
+    date = st.date_input('Date', value=datetime.now().date())
     name = st.pills('Buyer', state['buyers'], key="buyer_selectbox")
     quantity = st.number_input('Quantity', step=1)
     carry = st.pills('Carry', state['carry'], key="carry_selectbox")
